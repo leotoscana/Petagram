@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/crview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardElevation="@dimen/cardview_default_elevation"
+    android:layout_margin="@dimen/margen_crview"
+    card_view:cardCornerRadius="@dimen/radio_crview">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/largo_imagen"
+                android:id="@+id/img"
+                android:src="@drawable/dog_face_1">
+            </ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/imgB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dog_bone_48"
+                    android:theme="@style/BotonGustar"
+                    android:elevation="@dimen/elevacion_imgB"
+                    />
+                <TextView
+                    android:id="@+id/nombre"
+                    android:layout_width="@dimen/largo_texto"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombre"
+                    android:textSize="@dimen/textSize"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:id="@+id/numero"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/numero"
+                    android:textSize="@dimen/textSize"
+                    android:layout_gravity="center"
+                    />
+                <ImageView
+                    android:id="@+id/hueso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/hueso_dorado"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+</android.support.v7.widget.CardView>
