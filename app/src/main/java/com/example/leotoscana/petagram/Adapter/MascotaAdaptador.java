@@ -1,19 +1,17 @@
-package com.example.leotoscana.petagram;
+package com.example.leotoscana.petagram.Adapter;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.leotoscana.petagram.Pojo.Mascota;
+import com.example.leotoscana.petagram.R;
 
 import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
 
 
 /**
@@ -23,7 +21,6 @@ import static java.security.AccessController.getContext;
 public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.MascotaViewHolder> {
 
     private ArrayList<Mascota> mascotas;
-
 
     public MascotaAdaptador(ArrayList<Mascota> mascotas){
         this.mascotas = mascotas;
@@ -36,15 +33,32 @@ public class MascotaAdaptador extends RecyclerView.Adapter<MascotaAdaptador.Masc
     }
 
     @Override
-    public void onBindViewHolder(MascotaViewHolder mascotaViewHolder, int position) {
+    public void onBindViewHolder(final MascotaViewHolder mascotaViewHolder, int position) {
         final Mascota mascota=mascotas.get(position);
         mascotaViewHolder.img.setImageResource(mascota.getImagen());
         mascotaViewHolder.nombre.setText(mascota.getNombre());
-        mascotaViewHolder.numero.setText(mascota.getNumero());
+        mascotaViewHolder.numero.setText(String.valueOf(mascota.getNumero()));
+        if (mascota.isFavorito()){
+            mascotaViewHolder.imgB.setImageResource(R.drawable.hueso_dorado);
+        }
+        else {
+            mascotaViewHolder.imgB.setImageResource(R.drawable.hueso_blanco);
+        }
         mascotaViewHolder.imgB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mascota.setFavorito(true);
+                int fav = Integer.parseInt(mascotaViewHolder.numero.getText().toString());
+                if (mascota.isFavorito() == false){
+                    mascota.setFavorito(true);
+                    mascota.setNumero(fav + 1);
+                    mascotaViewHolder.imgB.setImageResource(R.drawable.hueso_dorado);
+                }
+                else {
+                    mascota.setFavorito(false);
+                    mascota.setNumero(fav - 1);
+                    mascotaViewHolder.imgB.setImageResource(R.drawable.hueso_blanco);
+                }
+                mascotaViewHolder.numero.setText(String.valueOf(mascota.getNumero()));
             }
         });
     }

@@ -1,94 +1,92 @@
 package com.example.leotoscana.petagram;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.example.leotoscana.petagram.Adapter.PageAdapter;
+import com.example.leotoscana.petagram.Fragment.Home;
+import com.example.leotoscana.petagram.Fragment.Perfil;
+import com.example.leotoscana.petagram.Pojo.Mascota;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Mascota> mascotas;
-    private RecyclerView listaMascotas;
+    private Toolbar   toolbar;
+    private TabLayout tab;
+    private ViewPager view;
+    private ArrayList<Fragment> fragments;
     String [] mascotaNombre;
     int    [] mascotaImagen;
-    String [] mascotaNumero;
+    int    [] mascotaNumero;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar miAcbar = (Toolbar) findViewById(R.id.miAcbar);
-        setSupportActionBar(miAcbar);
-        miAcbar.setLogo(R.drawable.ic_pets);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.ic_pets);
 
-        listaMascotas = (RecyclerView) findViewById(R.id.recycler);
-        listaMascotas.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        listaMascotas.setLayoutManager(llm);
-
-        iniciarMascotas();
-        iniciarAdaptador();
+        tab  = (TabLayout) findViewById(R.id.tab);
+        view = (ViewPager) findViewById(R.id.view);
+        setUpViewPager();
     }
 
-    public void iniciarAdaptador() {
-        MascotaAdaptador adaptador = new MascotaAdaptador(mascotas);
-        listaMascotas.setAdapter(adaptador);
+
+    private ArrayList<Fragment> agregarFragment(){
+        fragments = new ArrayList<>();
+        fragments.add(new Home());
+        fragments.add(new Perfil());
+        return fragments;
     }
 
-    public void iniciarMascotas() {
-        mascotas = new ArrayList<Mascota>();
-        mascotas.add(new Mascota("Lucky", R.drawable.dog_face_1, "3"));
-        mascotas.add(new Mascota("Tomy", R.drawable.dog_face_2, "4"));
-        mascotas.add(new Mascota("Yara", R.drawable.dog_face_3, "4"));
-        mascotas.add(new Mascota("Picha", R.drawable.dog_face_4, "5"));
-        mascotas.add(new Mascota("Wallace", R.drawable.dog_face_5, "6"));
-        mascotas.add(new Mascota("Luna", R.drawable.dog_face_6, "1"));
-        mascotas.add(new Mascota("Tota", R.drawable.dog_face_7, "2"));
-        mascotas.add(new Mascota("Carmela", R.drawable.dog_faces_8, "3"));
-        mascotas.add(new Mascota("Lara", R.drawable.dog_face_9, "3"));
-        mascotas.add(new Mascota("Barbon", R.drawable.dog_face_10, "9"));
+    private void setUpViewPager(){
+        view.setAdapter(new PageAdapter(getSupportFragmentManager(),agregarFragment()));
+        tab.setupWithViewPager(view);
+        tab.getTabAt(0).setIcon(R.drawable.ic_house);
+        tab.getTabAt(1).setIcon(R.drawable.ic_perfil);
     }
-    @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
-    @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.estrella:
-                mascotasFavoritas(mascotas);
                 Intent intent = new Intent(this,Favorito.class);
+                mascotasFavoritas(Home.mascotas);
                 intent.putExtra("Nombre",mascotaNombre);
                 intent.putExtra("Imagen",mascotaImagen);
                 intent.putExtra("Numero",mascotaNumero);
                 startActivity(intent);
+                break;
+            case R.id.contacto:
+                Intent i = new Intent(this,Contacto.class);
+                startActivity(i);
+                break;
+            case R.id.acerca:
+                Intent in = new Intent(this,Acerca.class);
+                startActivity(in);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void mascotasFavoritas(ArrayList<Mascota> mascotas){
-        mascotaNombre=new String [5];
-        mascotaImagen=new int    [5];
-        mascotaNumero=new String [5];
+        mascotaNombre = new String[5];
+        mascotaImagen = new int   [5];
+        mascotaNumero = new int   [5];
         int i=0;
         for (Mascota pet:mascotas) {
             if(pet.isFavorito()){
@@ -102,4 +100,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }

@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.leotoscana.petagram.Favorito">
 
-    <include layout="@layout/acbar"/>
+    <include layout="@layout/acbar_fav"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/miAcbar"
+        android:layout_below="@id/toolbarFav"
         android:id="@+id/recyclerDos"
         />
 

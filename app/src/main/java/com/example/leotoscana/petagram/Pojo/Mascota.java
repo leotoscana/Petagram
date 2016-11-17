@@ -1,4 +1,4 @@
-package com.example.leotoscana.petagram;
+package com.example.leotoscana.petagram.Pojo;
 
 
 import java.util.ArrayList;
@@ -8,13 +8,20 @@ public class Mascota {
     private String  nombre;
     private int     imagen;
     private boolean favorito;
-    private String     numero;
+    private int     numero;
 
-    public Mascota(String nombre, int imagen, String numero) {
+    public Mascota(String nombre, int imagen, int numero) {
         this.nombre   = nombre;
         this.imagen   = imagen;
         this.numero   = numero;
         this.favorito = false;
+    }
+
+    public Mascota(String nombre, int imagen, int numero, boolean favorito) {
+        this.nombre   = nombre;
+        this.imagen   = imagen;
+        this.numero   = numero;
+        this.favorito = favorito;
     }
 
     public String getNombre() {
@@ -41,11 +48,11 @@ public class Mascota {
         this.favorito = favorito;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 

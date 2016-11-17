@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.leotoscana.petagram.Adapter.MascotaAdaptador;
+import com.example.leotoscana.petagram.Pojo.Mascota;
+
 import java.util.ArrayList;
 
 public class Favorito extends AppCompatActivity {
@@ -19,7 +22,7 @@ public class Favorito extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorito);
 
-        Toolbar miAcbar = (Toolbar) findViewById(R.id.miAcbar);
+        Toolbar miAcbar = (Toolbar) findViewById(R.id.toolbarFav);
         setSupportActionBar(miAcbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         miAcbar.setLogo(R.drawable.ic_pets);
@@ -36,7 +39,7 @@ public class Favorito extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menufav,menu);
         return true;
     }
 
@@ -49,10 +52,10 @@ public class Favorito extends AppCompatActivity {
         Bundle parametro = getIntent().getExtras();
         String[] nombre  = parametro.getStringArray("Nombre");
         int   [] imagen  = parametro.getIntArray   ("Imagen");
-        String[] numero  = parametro.getStringArray("Numero");
+        int   [] numero  = parametro.getIntArray   ("Numero");
         mascotas=new ArrayList<>();
         for (int i=0;i<5;i++){
-            mascotas.add(new Mascota(nombre[i],imagen[i],numero[i]));
+            mascotas.add(new Mascota(nombre[i],imagen[i],numero[i],true));
         }
     }
 }
