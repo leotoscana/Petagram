@@ -8,14 +8,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.example.leotoscana.petagram.Adapter.MascotaAdaptador;
-import com.example.leotoscana.petagram.Pojo.Mascota;
+import com.example.leotoscana.petagram.Model.Mascota;
+import com.example.leotoscana.petagram.Presentador.IRViewPresentador;
+import com.example.leotoscana.petagram.Presentador.RViewPresentador;
+import com.example.leotoscana.petagram.Presentador.RViewPresentadorFav;
 
 import java.util.ArrayList;
 
-public class Favorito extends AppCompatActivity {
+public class Favorito extends AppCompatActivity implements IRview{
 
     private RecyclerView       listaMascotas;
     private ArrayList<Mascota> mascotas;
+    private IRViewPresentador  presentador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +33,8 @@ public class Favorito extends AppCompatActivity {
 
         listaMascotas = (RecyclerView) findViewById(R.id.recyclerDos);
         listaMascotas.setHasFixedSize(true);
+        presentador = new RViewPresentadorFav(this,getBaseContext());
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        listaMascotas.setLayoutManager(llm);
-
-        parametro();
-        iniciarAdapt();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,19 +42,23 @@ public class Favorito extends AppCompatActivity {
         return true;
     }
 
-    public void iniciarAdapt() {
-        MascotaAdaptador adapt = new MascotaAdaptador(mascotas);
-        listaMascotas.setAdapter(adapt);
+    public void generarLinearLayout() {
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        listaMascotas.setLayoutManager(llm);
     }
 
-    public void parametro(){
-        Bundle parametro = getIntent().getExtras();
-        String[] nombre  = parametro.getStringArray("Nombre");
-        int   [] imagen  = parametro.getIntArray   ("Imagen");
-        int   [] numero  = parametro.getIntArray   ("Numero");
-        mascotas=new ArrayList<>();
-        for (int i=0;i<5;i++){
-            mascotas.add(new Mascota(nombre[i],imagen[i],numero[i],true));
+    public MascotaAdaptador crearAdaptador(ArrayList<Mascota> mascotas) {
+        ArrayList<Mascota> mascotasFav = new ArrayList<>();
+        for (int i=1;i<=5&&i<mascotas.size();i++){
+            mascotasFav.add(mascotas.get(mascotas.size()-i));
         }
+        MascotaAdaptador adaptador = new MascotaAdaptador(mascotasFav,this);
+        return adaptador;
     }
+
+    public void inicializarAdaptadorRV(MascotaAdaptador adaptador) {
+        listaMascotas.setAdapter(adaptador);
+    }
+
 }

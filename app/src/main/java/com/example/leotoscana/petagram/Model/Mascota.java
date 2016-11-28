@@ -1,14 +1,16 @@
-package com.example.leotoscana.petagram.Pojo;
+package com.example.leotoscana.petagram.Model;
 
-
-import java.util.ArrayList;
 
 public class Mascota {
 
     private String  nombre;
+    private int     id;
     private int     imagen;
     private boolean favorito;
     private int     numero;
+
+    public Mascota(){
+    }
 
     public Mascota(String nombre, int imagen, int numero) {
         this.nombre   = nombre;
@@ -54,6 +56,14 @@ public class Mascota {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

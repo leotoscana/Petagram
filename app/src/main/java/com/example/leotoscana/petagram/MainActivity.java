@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import com.example.leotoscana.petagram.Adapter.PageAdapter;
 import com.example.leotoscana.petagram.Fragment.Home;
 import com.example.leotoscana.petagram.Fragment.Perfil;
-import com.example.leotoscana.petagram.Pojo.Mascota;
+import com.example.leotoscana.petagram.Model.Mascota;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tab;
     private ViewPager view;
     private ArrayList<Fragment> fragments;
-    String [] mascotaNombre;
-    int    [] mascotaImagen;
-    int    [] mascotaNumero;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.estrella:
                 Intent intent = new Intent(this,Favorito.class);
-                mascotasFavoritas(Home.mascotas);
-                intent.putExtra("Nombre",mascotaNombre);
-                intent.putExtra("Imagen",mascotaImagen);
-                intent.putExtra("Numero",mascotaNumero);
                 startActivity(intent);
                 break;
             case R.id.contacto:
@@ -81,24 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void mascotasFavoritas(ArrayList<Mascota> mascotas){
-        mascotaNombre = new String[5];
-        mascotaImagen = new int   [5];
-        mascotaNumero = new int   [5];
-        int i=0;
-        for (Mascota pet:mascotas) {
-            if(pet.isFavorito()){
-                mascotaNombre[i] = pet.getNombre();
-                mascotaNumero[i] = pet.getNumero();
-                mascotaImagen[i] = pet.getImagen();
-                i++;
-                if(i==5){
-                    i=0;
-                }
-            }
-        }
     }
 
 }
